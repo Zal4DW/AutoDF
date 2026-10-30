@@ -1,0 +1,42 @@
+[
+	{
+		"amount_left" : 4,
+		"amount_total" : 4,
+		"frequency" : "OneTime",
+		"id" : 0,
+		"is_active" : false,
+		"is_validated" : false,
+		"job" : "ConstructTable",
+		"material_category" : [ "wood" ]
+	},
+	{
+		"amount_left" : 8,
+		"amount_total" : 8,
+		"frequency" : "OneTime",
+		"id" : 1,
+		"is_active" : false,
+		"is_validated" : false,
+		"job" : "ConstructThrone",
+		"material_category" : [ "wood" ]
+	},
+	{
+		"amount_left" : 2,
+		"amount_total" : 2,
+		"frequency" : "OneTime",
+		"id" : 2,
+		"is_active" : false,
+		"is_validated" : false,
+		"job" : "ConstructChest",
+		"material_category" : [ "wood" ]
+	},
+	{
+		"amount_left" : 10,
+		"amount_total" : 10,
+		"frequency" : "OneTime",
+		"id" : 3,
+		"is_active" : false,
+		"is_validated" : false,
+		"job" : "MakeGoblet",
+		"material_category" : [ "wood" ]
+	}
+]

@@ -23,6 +23,39 @@ def test_pause_and_status():
     assert "citizens" in cmds(["status"])[1]
 
 
+def test_click_runs_bundled_script():
+    out = cmds(["click", "Work orders", "-n", "2"])
+    assert out[:2] == ["lua", "-f"]
+    assert out[2].endswith("autodf/lua/click.lua") and "\\" not in out[2]
+    assert os.path.exists(out[2])
+    assert out[3:] == ["text", "Work orders", "2"]
+
+
+def test_clickat_report_director():
+    assert cmds(["clickat", "29", "24"])[3:] == ["cell", "29", "24"]
+    assert cmds(["report"])[2].endswith("report.lua")
+    assert cmds(["mood"])[2].endswith("mood.lua") and os.path.exists(cmds(["mood"])[2])
+    assert cmds(["director", "stop"])[3:] == ["stop"]
+
+
+def test_trade_steps():
+    mark = cmds(["trade", "mark", "RING", "CAGE:15"])
+    assert mark[2].endswith("trade.lua") and mark[3:] == ["RING", "CAGE:15"]
+    pick = cmds(["trade", "select", "MEAT"])
+    assert pick[2].endswith("trade_select.lua") and os.path.exists(pick[2])
+
+
+def test_run_sets_pause_timer():
+    code = cmds(["run", "1200"])[1]
+    assert "dfhack.timeout(1200,'ticks'" in code and "pause_state=false" in code
+
+
+def test_decode_mixed_encodings():
+    utf8 = "Kilrudsanád".encode("utf-8")
+    cp437 = "Rigòth".encode("cp437")
+    assert harness.decode(utf8 + b"\n" + cp437) == "Kilrudsanád\nRigòth"
+
+
 def test_missing_binary(monkeypatch):
     monkeypatch.setenv("DFHACK_RUN", "/nonexistent/dfhack-run")
     code, out = harness.run_dfhack(["ls"])
