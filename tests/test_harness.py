@@ -38,6 +38,13 @@ def test_clickat_report_director():
     assert cmds(["director", "stop"])[3:] == ["stop"]
 
 
+def test_trade_steps():
+    mark = cmds(["trade", "mark", "RING", "CAGE:15"])
+    assert mark[2].endswith("trade.lua") and mark[3:] == ["RING", "CAGE:15"]
+    pick = cmds(["trade", "select", "MEAT"])
+    assert pick[2].endswith("trade_select.lua") and os.path.exists(pick[2])
+
+
 def test_run_sets_pause_timer():
     code = cmds(["run", "1200"])[1]
     assert "dfhack.timeout(1200,'ticks'" in code and "pause_state=false" in code

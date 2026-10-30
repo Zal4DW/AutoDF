@@ -5,6 +5,8 @@ You are the player. Drive a running Dwarf Fortress (with DFHack) using the harne
     python -m autodf status            # year/tick/pause/citizen count
     python -m autodf report            # each dwarf's job, digging left per z, stocks, orders, news
     python -m autodf mood              # each dwarf's stress, unmet needs, recent thoughts
+    python -m autodf trade mark RING CAGE:15   # haul our goods to the depot
+    python -m autodf trade select MEAT CHEESE  # on the open trade screen: pick goods to buy
     python -m autodf screen            # read what is on screen
     python -m autodf keys D_DESIGNATE  # send interface keys (see DF keybinding names)
     python -m autodf click Okay        # click on-screen text (-n 2 for the 2nd match)
@@ -74,14 +76,27 @@ Keep the fortress centre in `logs/captains-log.md`.
   neighbouring cells unless each has `(1x1)`), then `dfhack.buildings.setOwner(zone, unit)`.
 - **Quickfort ignored `start()` offsets here.** The cursor is the top-left cell of each
   section; write blueprints that way.
-- **Tavern keepers cannot be set from Lua safely.** The tavern works without one.
+- **Taverns and temples go indoors.** A zone on open ground has no value and dwarves get
+  rained on. Dig rooms (`hall_dig` in the morale blueprint), furnish the tavern with
+  tables, chairs and chests, and add statues to the temple. Soil cannot be smoothed.
+- **Occupations go through the location page.** Open the tavern's zone panel from
+  Places > Locations, click the location button, then the "+" beside Tavern Keeper.
+  Don't use the dwarf-with-hat button on the zone panel; that assigns an owner.
+- **A new dig competes with every other dig.** Use `quickfort run ... -p 1` for rooms
+  that are needed now.
+- **Trading:** `trade mark` the goods; when the caravan reads AtDepot, click the depot,
+  choose "Anyone requested at depot" if the broker is busy (the broker meets the
+  liaison first), click Trade (`click Trade -n 2`), run `trade select`, press Trade
+  (`click Trade -n 2` again) and confirm the DFHack dialog with `keys SELECT`. Leave
+  the merchant a profit; about 25% of the offer was accepted.
 - DF ignores instant OS mouse clicks. `click`/`clickat` go through DFHack and avoid this.
 - `io.write` output does not reach `dfhack-run`; use `print` in Lua.
 
 ## Repo blueprints and orders
 
-`autodf/blueprints/morale.csv` (temple, tavern, bedrooms, dormitory, foraging) and
-`autodf/orders/*.json` (wooden comforts, beds, trade goods). Copy them to
+`autodf/blueprints/morale.csv` (bedrooms, dormitory, an underground tavern and temple
+with furniture, foraging) and `autodf/orders/*.json` (wooden comforts, beds, tavern
+furniture, temple statues and toys, trade goods). Copy them to
 `<DF>/dfhack-config/blueprints/autodf/` and `<DF>/dfhack-config/orders/` (as
 `autodf_<name>.json`), then `quickfort run autodf/morale.csv -n /<label> -c x,y,z` or
 `orders import autodf_<name>`.

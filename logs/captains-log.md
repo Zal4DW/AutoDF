@@ -81,6 +81,23 @@ flowing (43 boulders, 60 blocks). Stress: the original seven are content except 
 stoneworker (~10,900); the adult migrants are recovering; the four children are still
 near 17,500.
 
+## Galena to Limestone: a real tavern, a temple, and the first caravan
+
+The first temple and tavern were zones on open ground: no roof, no furniture, value 0.
+Dug a proper hall north of the farm-level dining room at 141,16 (dig priority 1 after a
+week at normal priority produced two tiles): a 5x5 temple and an 11x7 tavern.
+
+- Tavern: 4 tables, 8 chairs, 2 chests; value 315. Bëmbul is tavern keeper, set
+  through the location page.
+- Temple: two stone statues ordered; the soil walls cannot be smoothed.
+- 4 wooden toys for the children.
+
+**Caravan, 15th Limestone:** the dwarven caravan from Bëmbul Tinöth. Rigòth was
+meeting the liaison, so the tavern keeper traded instead. Sold 54 items (obsidian
+crafts, rough zircons, 15 cages; 2,830 by the merchant's count) for 2,180 of food,
+drink, cloth and thread. Stocks afterwards: 75 meat, 41 fish, 30 cheese, 140 plants,
+57 fruit and leaves, 59 meals, 283 drink, 25 cloth.
+
 ## Next
 
 - Finish digging the industry level, then /industry2 for permanent workshops and stone

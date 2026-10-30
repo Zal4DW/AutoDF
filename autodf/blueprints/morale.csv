@@ -1,8 +1,4 @@
-#zone label(temple) start(1;1;top-left corner) Temple over an existing meeting room, 8x6 from the cursor
-"m{location=temple name=""Shrine"" allow=residents}(8x6)"
-#zone label(tavern) start(1;1;top-left corner) Tavern over the same room, 8x6 from the cursor
-"h{location=tavern name=""Bronze Mug"" allow=residents}(8x6)"
-#zone label(bedrooms) start(1;1;top-left bed) One bedroom per bed in the Dreamfort farming-level dormitory (two rows of three beds, a gap row between)
+#zone label(bedrooms) Cursor on the top-left bed. One bedroom per bed in the Dreamfort farming-level dormitory (two rows of three beds, a gap row between)
 "b{name=""Room 1""}(1x1)","b{name=""Room 2""}(1x1)","b{name=""Room 3""}(1x1)"
 ,,
 "b{name=""Room 4""}(1x1)","b{name=""Room 5""}(1x1)","b{name=""Room 6""}(1x1)"
@@ -16,5 +12,52 @@ d(8x3)
 b,b,b,b,b,b,b,b
 #zone label(dorm_zone) Cursor on the top-left room tile. Dormitory zone over the room
 "d{name=""Dormitory""}(8x3)"
+#dig label(hall_dig) Cursor at the top-left of a 12x13 box. Temple 5x5 at the top, an 11x7 tavern below it, a doorway between them, and a doorway at the bottom-left corner into the room next door
+,,d(5x5)
+,,
+,,
+,,
+,,
+,,,,d
+,d(11x7)
+,,
+,,
+,,
+,,
+,,
+d
+#build label(hall_furniture) Same cursor as hall_dig. Four tables with two chairs each in the tavern
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,c,t,c,,c,t,c
+,,
+,,c,t,c,,c,t,c
+,,
+,,
+#build label(hall_chests) Same cursor as hall_dig. Two chests in the tavern's top corners, for its goblets
+,,
+,,
+,,
+,,
+,,
+,,
+,h,,,,,,,,,,h
+#build label(temple_statues) Same cursor as hall_dig. Two statues in the temple's top corners
+,,
+,,s,,,s
+#zone label(hall_zones) Same cursor as hall_dig. Temple over the top room, tavern over the bottom room
+,,"m{location=temple name=""Hall of Prayers"" allow=residents}(5x5)"
+,,
+,,
+,,
+,,
+,,
+,"h{location=tavern name=""The Bronze Mug"" allow=residents}(11x7)"
 #dig label(forage) start(1;1;top-left corner) Mark every shrub in a 40x40 area for gathering (summer food)
 p(40x40)

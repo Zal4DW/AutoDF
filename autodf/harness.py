@@ -102,6 +102,8 @@ def build_commands(args):
         return lua_script("report")
     if a == "mood":
         return lua_script("mood")
+    if a == "trade":
+        return lua_script("trade" if args.step == "mark" else "trade_select", *args.types)
     if a == "director":
         return lua_script("director", args.mode)
     if a == "run":
@@ -145,6 +147,10 @@ def parser():
     x.add_argument("y", type=int)
     sub.add_parser("report", help="dwarves' jobs, digging left, stocks, orders, news")
     sub.add_parser("mood", help="each dwarf's stress, unmet needs and recent thoughts")
+    tr = sub.add_parser("trade", help="mark goods for the depot, or select goods on the trade screen")
+    tr.add_argument("step", choices=["mark", "select"],
+                    help="mark: haul our goods to the depot; select: pick what to buy on an open trade screen")
+    tr.add_argument("types", nargs="+", help="item types, e.g. RING CAGE:15 (mark) or MEAT CHEESE (select)")
     d = sub.add_parser("director", help="camera follows dwarves doing visible work")
     d.add_argument("mode", choices=["start", "stop"])
     r = sub.add_parser("run", help="unpause for N ticks (1200 = one day), then wait for the pause")
