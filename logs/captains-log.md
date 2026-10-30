@@ -106,7 +106,28 @@ llamas, two cavies, horse) in the main pasture, three dogs in the guard-dog pen 
 the stairs, the male peachick in the male-bird pen. Both cats are in "Cat patrol" pens
 over the two big food stockpiles on the farm level, to keep vermin off the food.
 
+## Late Limestone: autumn plan, first part
+
+- Pushed the industry level dig at priority 1; z157 is fully dug.
+- /surface3 built (stairs enclosure, vents covered). /surface4 applied; 59 of 150
+  floors and walls still to build.
+- /industry2 applied: stockpiles, 2 mason's, craftsdwarf's, jeweller's and mechanic's
+  workshops built; five minecarts assigned to the quantum stockpile routes.
+- /industry3 applied: smelters, forge, kiln, glass and wood furnaces and the rest are
+  planned, not yet built.
+- Five more migrants: population 20. Temple statues done.
+
+**Stopped at tick 239,190 (late Limestone), saved.** Stocks: 45 meat, 38 fish, 144 plants,
+272 drink, 135 blocks, 70 boulders. Concern: 9 of 20 dwarves have stress over 10,000,
+mostly the newest migrants and the children. Brewing keeps stalling for lack of empty
+barrels; rock pots are queued now that stone is flowing.
+
 ## Next
+
+- Look at why 9 dwarves are stressed (`mood`), starting with the new migrants.
+- Fix the barrel shortage so brewing restarts.
+- Finish /surface4 and the /industry3 workshops, then dig and build the services level
+  (dining hall, hospital, well) and form a four-dwarf militia.
 
 - Finish digging the industry level, then /industry2 for permanent workshops and stone
   stockpiles. Stone jobs stay blocked until then.
