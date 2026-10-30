@@ -98,6 +98,14 @@ crafts, rough zircons, 15 cages; 2,830 by the merchant's count) for 2,180 of foo
 drink, cloth and thread. Stocks afterwards: 75 meat, 41 fish, 30 cheese, 140 plants,
 57 fruit and leaves, 59 meals, 283 drink, 25 cloth.
 
+## 17th Limestone: animals penned
+
+Closed the liaison meeting (no requests made for next year). The pastures Dreamfort
+built on day one had never had an animal assigned. Now: six grazers (cow calf, two
+llamas, two cavies, horse) in the main pasture, three dogs in the guard-dog pen around
+the stairs, the male peachick in the male-bird pen. Both cats are in "Cat patrol" pens
+over the two big food stockpiles on the farm level, to keep vermin off the food.
+
 ## Next
 
 - Finish digging the industry level, then /industry2 for permanent workshops and stone

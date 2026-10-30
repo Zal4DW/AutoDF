@@ -82,6 +82,13 @@ Keep the fortress centre in `logs/captains-log.md`.
 - **Occupations go through the location page.** Open the tavern's zone panel from
   Places > Locations, click the location button, then the "+" beside Tavern Keeper.
   Don't use the dwarf-with-hat button on the zone panel; that assigns an owner.
+- **Dreamfort makes pastures but assigns no animals.** Grazers left loose can starve.
+  Open each pen from Places > Zones (check the name on the panel: the button row in
+  the list is not reliable), click the assign button (cell 42,12), and tick animals in
+  the checkbox column (cell x 84). Grazers go in "Main pasture", dogs in "Guard dogs",
+  male birds in "Male birds"; autonestbox handles hens. `zone assign` is unavailable.
+- **Cats belong on the food stores.** Put a `cat_patrol` pen over each big food
+  stockpile and assign one cat to each, so they hunt vermin where the food is.
 - **A new dig competes with every other dig.** Use `quickfort run ... -p 1` for rooms
   that are needed now.
 - **Trading:** `trade mark` the goods; when the caravan reads AtDepot, click the depot,

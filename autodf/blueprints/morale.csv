@@ -59,5 +59,7 @@ d
 ,,
 ,,
 ,"h{location=tavern name=""The Bronze Mug"" allow=residents}(11x7)"
+#zone label(cat_patrol) Cursor on the top-left of a food stockpile. A 10x10 pen to assign a cat to, so it hunts vermin in the food stores
+"n{name=""Cat patrol""}(10x10)"
 #dig label(forage) start(1;1;top-left corner) Mark every shrub in a 40x40 area for gathering (summer food)
 p(40x40)
