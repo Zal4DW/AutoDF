@@ -8,6 +8,9 @@ import os
 import shlex
 import subprocess
 import sys
+import time
+
+LUA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lua")
 
 SCREEN_LUA = (
     "local w,h=dfhack.screen.getWindowSize();"
@@ -22,22 +25,43 @@ def dfhack_binary():
     return os.environ.get("DFHACK_RUN", "dfhack-run")
 
 
+def decode(data):
+    """Decode dfhack-run output line by line.
+
+    Screen text arrives as UTF-8, but unit and place names arrive in DF's CP437,
+    so a line that is not valid UTF-8 is read as CP437.
+    """
+    lines = []
+    for line in data.splitlines():
+        try:
+            lines.append(line.decode("utf-8"))
+        except UnicodeDecodeError:
+            lines.append(line.decode("cp437"))
+    return "\n".join(lines)
+
+
 def run_dfhack(args, timeout=60):
     """Run a dfhack-run command; returns (exit_code, combined output)."""
     try:
         proc = subprocess.run(
             [dfhack_binary(), *args],
-            capture_output=True, text=True, timeout=timeout,
+            capture_output=True, timeout=timeout,
         )
     except FileNotFoundError:
         return 127, f"{dfhack_binary()} not found; set DFHACK_RUN to its path"
     except subprocess.TimeoutExpired:
         return 124, "dfhack-run timed out"
-    return proc.returncode, (proc.stdout + proc.stderr).strip()
+    return proc.returncode, decode(proc.stdout + proc.stderr).strip()
 
 
 def lua_string(s):
     return "[=[" + s.replace("]=]", "]=].. ']=]' ..[=[") + "]=]"
+
+
+def lua_script(name, *args):
+    """dfhack-run argv that runs one of the bundled scripts in autodf/lua."""
+    path = os.path.join(LUA_DIR, name + ".lua").replace("\\", "/")
+    return ["lua", "-f", path, *[str(a) for a in args]]
 
 
 def build_commands(args):
@@ -70,7 +94,32 @@ def build_commands(args):
         return ["lua",
                 f"local r=df.global.world.status.announcements;"
                 f"for i=math.max(0,#r-{args.count}),#r-1 do print(r[i].text) end"]
+    if a == "click":
+        return lua_script("click", "text", args.text, args.n)
+    if a == "clickat":
+        return lua_script("click", "cell", args.x, args.y)
+    if a == "report":
+        return lua_script("report")
+    if a == "mood":
+        return lua_script("mood")
+    if a == "director":
+        return lua_script("director", args.mode)
+    if a == "run":
+        return ["lua",
+                f"dfhack.timeout({args.ticks},'ticks',function() df.global.pause_state=true end);"
+                "df.global.pause_state=false"]
     raise ValueError(a)
+
+
+def wait_for_pause(limit, poll=3.0):
+    """Poll until the game pauses or `limit` seconds pass; returns True if it paused."""
+    deadline = time.monotonic() + limit
+    while time.monotonic() < deadline:
+        time.sleep(poll)
+        code, out = run_dfhack(["lua", "print(df.global.pause_state)"])
+        if code == 0 and out.strip() == "true":
+            return True
+    return False
 
 
 def parser():
@@ -88,13 +137,36 @@ def parser():
     sub.add_parser("status", help="year/tick/pause/citizen summary")
     n = sub.add_parser("announcements", help="recent game announcements")
     n.add_argument("-n", "--count", type=int, default=20)
+    t = sub.add_parser("click", help="left-click on-screen text, e.g. Okay")
+    t.add_argument("text")
+    t.add_argument("-n", type=int, default=1, help="which occurrence to click")
+    x = sub.add_parser("clickat", help="left-click a screen cell (columns, rows)")
+    x.add_argument("x", type=int)
+    x.add_argument("y", type=int)
+    sub.add_parser("report", help="dwarves' jobs, digging left, stocks, orders, news")
+    sub.add_parser("mood", help="each dwarf's stress, unmet needs and recent thoughts")
+    d = sub.add_parser("director", help="camera follows dwarves doing visible work")
+    d.add_argument("mode", choices=["start", "stop"])
+    r = sub.add_parser("run", help="unpause for N ticks (1200 = one day), then wait for the pause")
+    r.add_argument("ticks", type=int)
+    r.add_argument("--timeout", type=float, default=600, help="seconds to wait (default 600)")
     return p
 
 
 def main(argv=None):
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(errors="replace")
     args = parser().parse_args(argv)
     code, out = run_dfhack(build_commands(args))
     if out:
+        print(out)
+    if args.action == "click" and "text not on screen" in out:
+        return 1  # dfhack-run exits 0 even when the script raises qerror
+    if args.action == "run" and code == 0:
+        if not wait_for_pause(args.timeout):
+            print(f"still running after {args.timeout:.0f}s")
+            return 1
+        code, out = run_dfhack(build_commands(parser().parse_args(["status"])))
         print(out)
     return code
 

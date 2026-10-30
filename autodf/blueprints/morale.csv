@@ -1,0 +1,20 @@
+#zone label(temple) start(1;1;top-left corner) Temple over an existing meeting room, 8x6 from the cursor
+"m{location=temple name=""Shrine"" allow=residents}(8x6)"
+#zone label(tavern) start(1;1;top-left corner) Tavern over the same room, 8x6 from the cursor
+"h{location=tavern name=""Bronze Mug"" allow=residents}(8x6)"
+#zone label(bedrooms) start(1;1;top-left bed) One bedroom per bed in the Dreamfort farming-level dormitory (two rows of three beds, a gap row between)
+"b{name=""Room 1""}(1x1)","b{name=""Room 2""}(1x1)","b{name=""Room 3""}(1x1)"
+,,
+"b{name=""Room 4""}(1x1)","b{name=""Room 5""}(1x1)","b{name=""Room 6""}(1x1)"
+#build label(extra_bed) start(1;1;bed tile) One bed, for a seventh dwarf in the dormitory corridor
+b
+#zone label(extra_bedroom) start(1;1;bed tile) Bedroom zone over the extra bed
+"b{name=""Room 7""}(1x1)"
+#dig label(dorm_dig) Cursor on the top-left room tile. 8x3 dormitory room
+d(8x3)
+#build label(dorm_beds) Cursor on the top-left room tile. Eight beds along the north wall
+b,b,b,b,b,b,b,b
+#zone label(dorm_zone) Cursor on the top-left room tile. Dormitory zone over the room
+"d{name=""Dormitory""}(8x3)"
+#dig label(forage) start(1;1;top-left corner) Mark every shrub in a 40x40 area for gathering (summer food)
+p(40x40)
